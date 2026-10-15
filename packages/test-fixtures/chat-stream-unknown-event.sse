@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_unknown","conversation_id":"conv_demo","message_id":"msg_unknown","protocol_version":"1.0.0"}
+
+event: debug.trace
+data: {"trace_id":"trace_ignored","note":"parser must ignore this unknown event"}
+
+event: message.delta
+data: {"request_id":"req_unknown","message_id":"msg_unknown","delta":"未知事件不会阻断已知事件处理。"}
+
+event: message.done
+data: {"request_id":"req_unknown","conversation_id":"conv_demo","message_id":"msg_unknown","answer_status":"answered","intent":"faq_query","search_route":"retrieve","confidence":"medium","latency_ms":99,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

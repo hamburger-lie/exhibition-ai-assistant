@@ -1,0 +1,12 @@
+{
+  "request_id": "req_initial_timeout",
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "AI_UPSTREAM_TIMEOUT",
+    "message": "no first event before deadline",
+    "user_message": "响应超时，请重试。",
+    "retryable": true,
+    "details": null
+  }
+}

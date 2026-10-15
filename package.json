@@ -1,0 +1,59 @@
+{
+  "name": "ai-qa-assistant",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "postinstall": "pnpm --filter @ai-assistant/bff prisma:generate",
+    "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.tsx --no-error-on-unmatched-pattern --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "generate:check": "pnpm --filter @ai-assistant/contracts generate:check",
+    "quality:workspaces": "node scripts/check-workspace-quality.mjs",
+    "typecheck:contract-probes": "tsc --project tests/contract/type-probes/tsconfig.json",
+    "typecheck": "pnpm quality:workspaces && pnpm generate:check && pnpm typecheck:contract-probes && pnpm --workspace-concurrency=1 --recursive --if-present typecheck",
+    "test": "pnpm generate:check && vitest run --passWithNoTests --no-file-parallelism",
+    "test:contract": "pnpm generate:check && vitest run tests/contract/schema-validation.test.ts tests/contract/fixtures.test.ts --no-file-parallelism",
+    "test:e2e": "playwright test",
+    "build": "pnpm quality:workspaces && pnpm --workspace-concurrency=1 --recursive --if-present build"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.49.1",
+    "@redocly/cli": "2.47.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "20.x",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^10.0.1",
+    "globals": "^17.0.0",
+    "js-yaml": "^4.3.1",
+    "json-schema-to-typescript": "^15.0.4",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^3.2.4"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma"
+    ]
+  }
+}

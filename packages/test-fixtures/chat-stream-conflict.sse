@@ -1,0 +1,14 @@
+event: message.start
+data: {"request_id":"req_conflict","conversation_id":"conv_demo","message_id":"msg_conflict","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_conflict","message_id":"msg_conflict","delta":"活动表与公告的时间不一致，请以现场公告为准。"}
+
+event: citation
+data: {"request_id":"req_conflict","message_id":"msg_conflict","citation":{"citation_id":"citation_event_schedule","source_id":"source_events_2026","title":"活动排期表","page_or_row":"row 12","snippet":"10:00开始","source_type":"structured_data"}}
+
+event: citation
+data: {"request_id":"req_conflict","message_id":"msg_conflict","citation":{"citation_id":"citation_event_notice","source_id":"source_notice_2026","title":"现场变更公告","page_or_row":"第1段","snippet":"调整至10:30开始","source_type":"document"}}
+
+event: message.done
+data: {"request_id":"req_conflict","conversation_id":"conv_demo","message_id":"msg_conflict","answer_status":"conflict","intent":"event_search","search_route":"retrieve","confidence":"low","latency_ms":116,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

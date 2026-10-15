@@ -1,0 +1,411 @@
+<svg viewBox="0 0 1170 600" xmlns="http://www.w3.org/2000/svg" role="presentation">
+<!-- 公开展示版的示意图：按真实展位编号排成格子，不含主办方原图。展位的 id 与接口的 map_shape_id 一致，结构与正式版相同，定位和高亮照常工作。 -->
+<style>.booth{fill:#ffffff;stroke:#b9bec4;stroke-width:1.5}.booth-code{fill:#1a1a1f;font-family:sans-serif}</style>
+<rect x="0" y="0" width="1170" height="600" fill="#eef0f2"/>
+<text x="28" y="42" font-size="18" font-weight="700" fill="#1a1a1f">5.1馆</text>
+<text x="118" y="42" font-size="12" fill="#5a5a66">示意图（101 个展位）</text>
+<g class="booth-cell" id="shape_a51_E01A" data-code="E01A">
+<rect class="booth" x="28" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="92" font-size="12" text-anchor="middle">E01A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E01G" data-code="E01G">
+<rect class="booth" x="98" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="92" font-size="12" text-anchor="middle">E01G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E02A" data-code="E02A">
+<rect class="booth" x="168" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="92" font-size="12" text-anchor="middle">E02A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E03A" data-code="E03A">
+<rect class="booth" x="238" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="92" font-size="12" text-anchor="middle">E03A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E03L" data-code="E03L">
+<rect class="booth" x="308" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="92" font-size="12" text-anchor="middle">E03L</text>
+</g>
+<g class="booth-cell" id="shape_a51_E04A" data-code="E04A">
+<rect class="booth" x="378" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="92" font-size="12" text-anchor="middle">E04A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E04K" data-code="E04K">
+<rect class="booth" x="448" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="92" font-size="12" text-anchor="middle">E04K</text>
+</g>
+<g class="booth-cell" id="shape_a51_E05A" data-code="E05A">
+<rect class="booth" x="518" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="92" font-size="12" text-anchor="middle">E05A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E05L" data-code="E05L">
+<rect class="booth" x="588" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="92" font-size="12" text-anchor="middle">E05L</text>
+</g>
+<g class="booth-cell" id="shape_a51_E06L" data-code="E06L">
+<rect class="booth" x="658" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="92" font-size="12" text-anchor="middle">E06L</text>
+</g>
+<g class="booth-cell" id="shape_a51_E07A" data-code="E07A">
+<rect class="booth" x="728" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="92" font-size="12" text-anchor="middle">E07A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E08K" data-code="E08K">
+<rect class="booth" x="798" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="92" font-size="12" text-anchor="middle">E08K</text>
+</g>
+<g class="booth-cell" id="shape_a51_E08L" data-code="E08L">
+<rect class="booth" x="868" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="900" y="92" font-size="12" text-anchor="middle">E08L</text>
+</g>
+<g class="booth-cell" id="shape_a51_E09A" data-code="E09A">
+<rect class="booth" x="938" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="970" y="92" font-size="12" text-anchor="middle">E09A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E09B" data-code="E09B">
+<rect class="booth" x="1008" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1040" y="92" font-size="12" text-anchor="middle">E09B</text>
+</g>
+<g class="booth-cell" id="shape_a51_E09C" data-code="E09C">
+<rect class="booth" x="1078" y="68" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1110" y="92" font-size="12" text-anchor="middle">E09C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E09G" data-code="E09G">
+<rect class="booth" x="28" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="148" font-size="12" text-anchor="middle">E09G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E09H" data-code="E09H">
+<rect class="booth" x="98" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="148" font-size="12" text-anchor="middle">E09H</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10A" data-code="E10A">
+<rect class="booth" x="168" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="148" font-size="12" text-anchor="middle">E10A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10B" data-code="E10B">
+<rect class="booth" x="238" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="148" font-size="12" text-anchor="middle">E10B</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10C" data-code="E10C">
+<rect class="booth" x="308" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="148" font-size="12" text-anchor="middle">E10C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10D" data-code="E10D">
+<rect class="booth" x="378" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="148" font-size="12" text-anchor="middle">E10D</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10G" data-code="E10G">
+<rect class="booth" x="448" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="148" font-size="12" text-anchor="middle">E10G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E10H" data-code="E10H">
+<rect class="booth" x="518" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="148" font-size="12" text-anchor="middle">E10H</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11A" data-code="E11A">
+<rect class="booth" x="588" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="148" font-size="12" text-anchor="middle">E11A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11B" data-code="E11B">
+<rect class="booth" x="658" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="148" font-size="12" text-anchor="middle">E11B</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11C" data-code="E11C">
+<rect class="booth" x="728" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="148" font-size="12" text-anchor="middle">E11C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11D" data-code="E11D">
+<rect class="booth" x="798" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="148" font-size="12" text-anchor="middle">E11D</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11G" data-code="E11G">
+<rect class="booth" x="868" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="900" y="148" font-size="12" text-anchor="middle">E11G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E11H" data-code="E11H">
+<rect class="booth" x="938" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="970" y="148" font-size="12" text-anchor="middle">E11H</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12A" data-code="E12A">
+<rect class="booth" x="1008" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1040" y="148" font-size="12" text-anchor="middle">E12A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12B" data-code="E12B">
+<rect class="booth" x="1078" y="124" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1110" y="148" font-size="12" text-anchor="middle">E12B</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12C" data-code="E12C">
+<rect class="booth" x="28" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="204" font-size="12" text-anchor="middle">E12C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12D" data-code="E12D">
+<rect class="booth" x="98" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="204" font-size="12" text-anchor="middle">E12D</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12G" data-code="E12G">
+<rect class="booth" x="168" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="204" font-size="12" text-anchor="middle">E12G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E12H" data-code="E12H">
+<rect class="booth" x="238" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="204" font-size="12" text-anchor="middle">E12H</text>
+</g>
+<g class="booth-cell" id="shape_a51_E13A" data-code="E13A">
+<rect class="booth" x="308" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="204" font-size="12" text-anchor="middle">E13A</text>
+</g>
+<g class="booth-cell" id="shape_a51_E13C" data-code="E13C">
+<rect class="booth" x="378" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="204" font-size="12" text-anchor="middle">E13C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E13D" data-code="E13D">
+<rect class="booth" x="448" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="204" font-size="12" text-anchor="middle">E13D</text>
+</g>
+<g class="booth-cell" id="shape_a51_E13G" data-code="E13G">
+<rect class="booth" x="518" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="204" font-size="12" text-anchor="middle">E13G</text>
+</g>
+<g class="booth-cell" id="shape_a51_E13H" data-code="E13H">
+<rect class="booth" x="588" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="204" font-size="12" text-anchor="middle">E13H</text>
+</g>
+<g class="booth-cell" id="shape_a51_E14C" data-code="E14C">
+<rect class="booth" x="658" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="204" font-size="12" text-anchor="middle">E14C</text>
+</g>
+<g class="booth-cell" id="shape_a51_E14D" data-code="E14D">
+<rect class="booth" x="728" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="204" font-size="12" text-anchor="middle">E14D</text>
+</g>
+<g class="booth-cell" id="shape_a51_E14H" data-code="E14H">
+<rect class="booth" x="798" y="180" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="204" font-size="12" text-anchor="middle">E14H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F01A" data-code="F01A">
+<rect class="booth" x="28" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="260" font-size="12" text-anchor="middle">F01A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F02A" data-code="F02A">
+<rect class="booth" x="98" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="260" font-size="12" text-anchor="middle">F02A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F03A" data-code="F03A">
+<rect class="booth" x="168" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="260" font-size="12" text-anchor="middle">F03A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F03H" data-code="F03H">
+<rect class="booth" x="238" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="260" font-size="12" text-anchor="middle">F03H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F03L" data-code="F03L">
+<rect class="booth" x="308" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="260" font-size="12" text-anchor="middle">F03L</text>
+</g>
+<g class="booth-cell" id="shape_a51_F04A" data-code="F04A">
+<rect class="booth" x="378" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="260" font-size="12" text-anchor="middle">F04A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F05A" data-code="F05A">
+<rect class="booth" x="448" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="260" font-size="12" text-anchor="middle">F05A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F05H" data-code="F05H">
+<rect class="booth" x="518" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="260" font-size="12" text-anchor="middle">F05H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F05L" data-code="F05L">
+<rect class="booth" x="588" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="260" font-size="12" text-anchor="middle">F05L</text>
+</g>
+<g class="booth-cell" id="shape_a51_F06A" data-code="F06A">
+<rect class="booth" x="658" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="260" font-size="12" text-anchor="middle">F06A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F06H" data-code="F06H">
+<rect class="booth" x="728" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="260" font-size="12" text-anchor="middle">F06H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F06L" data-code="F06L">
+<rect class="booth" x="798" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="260" font-size="12" text-anchor="middle">F06L</text>
+</g>
+<g class="booth-cell" id="shape_a51_F07A" data-code="F07A">
+<rect class="booth" x="868" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="900" y="260" font-size="12" text-anchor="middle">F07A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F07L" data-code="F07L">
+<rect class="booth" x="938" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="970" y="260" font-size="12" text-anchor="middle">F07L</text>
+</g>
+<g class="booth-cell" id="shape_a51_F08A" data-code="F08A">
+<rect class="booth" x="1008" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1040" y="260" font-size="12" text-anchor="middle">F08A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F08B" data-code="F08B">
+<rect class="booth" x="1078" y="236" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1110" y="260" font-size="12" text-anchor="middle">F08B</text>
+</g>
+<g class="booth-cell" id="shape_a51_F08K" data-code="F08K">
+<rect class="booth" x="28" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="316" font-size="12" text-anchor="middle">F08K</text>
+</g>
+<g class="booth-cell" id="shape_a51_F08L" data-code="F08L">
+<rect class="booth" x="98" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="316" font-size="12" text-anchor="middle">F08L</text>
+</g>
+<g class="booth-cell" id="shape_a51_F09A" data-code="F09A">
+<rect class="booth" x="168" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="316" font-size="12" text-anchor="middle">F09A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F09G" data-code="F09G">
+<rect class="booth" x="238" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="316" font-size="12" text-anchor="middle">F09G</text>
+</g>
+<g class="booth-cell" id="shape_a51_F10A" data-code="F10A">
+<rect class="booth" x="308" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="316" font-size="12" text-anchor="middle">F10A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F10G" data-code="F10G">
+<rect class="booth" x="378" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="316" font-size="12" text-anchor="middle">F10G</text>
+</g>
+<g class="booth-cell" id="shape_a51_F10H" data-code="F10H">
+<rect class="booth" x="448" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="316" font-size="12" text-anchor="middle">F10H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F11A" data-code="F11A">
+<rect class="booth" x="518" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="316" font-size="12" text-anchor="middle">F11A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F11D" data-code="F11D">
+<rect class="booth" x="588" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="316" font-size="12" text-anchor="middle">F11D</text>
+</g>
+<g class="booth-cell" id="shape_a51_F11H" data-code="F11H">
+<rect class="booth" x="658" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="316" font-size="12" text-anchor="middle">F11H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F12A" data-code="F12A">
+<rect class="booth" x="728" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="316" font-size="12" text-anchor="middle">F12A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F12G" data-code="F12G">
+<rect class="booth" x="798" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="316" font-size="12" text-anchor="middle">F12G</text>
+</g>
+<g class="booth-cell" id="shape_a51_F12H" data-code="F12H">
+<rect class="booth" x="868" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="900" y="316" font-size="12" text-anchor="middle">F12H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F13A" data-code="F13A">
+<rect class="booth" x="938" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="970" y="316" font-size="12" text-anchor="middle">F13A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F13H" data-code="F13H">
+<rect class="booth" x="1008" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1040" y="316" font-size="12" text-anchor="middle">F13H</text>
+</g>
+<g class="booth-cell" id="shape_a51_F14A" data-code="F14A">
+<rect class="booth" x="1078" y="292" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1110" y="316" font-size="12" text-anchor="middle">F14A</text>
+</g>
+<g class="booth-cell" id="shape_a51_F14G" data-code="F14G">
+<rect class="booth" x="28" y="348" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="372" font-size="12" text-anchor="middle">F14G</text>
+</g>
+<g class="booth-cell" id="shape_a51_F14H" data-code="F14H">
+<rect class="booth" x="98" y="348" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="372" font-size="12" text-anchor="middle">F14H</text>
+</g>
+<g class="booth-cell" id="shape_a51_G01A" data-code="G01A">
+<rect class="booth" x="28" y="404" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="428" font-size="12" text-anchor="middle">G01A</text>
+</g>
+<g class="booth-cell" id="shape_a51_G02A" data-code="G02A">
+<rect class="booth" x="98" y="404" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="428" font-size="12" text-anchor="middle">G02A</text>
+</g>
+<g class="booth-cell" id="shape_a51_G03A" data-code="G03A">
+<rect class="booth" x="168" y="404" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="428" font-size="12" text-anchor="middle">G03A</text>
+</g>
+<g class="booth-cell" id="shape_a51_G04A" data-code="G04A">
+<rect class="booth" x="238" y="404" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="428" font-size="12" text-anchor="middle">G04A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H01A" data-code="H01A">
+<rect class="booth" x="28" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="484" font-size="12" text-anchor="middle">H01A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H01J" data-code="H01J">
+<rect class="booth" x="98" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="484" font-size="12" text-anchor="middle">H01J</text>
+</g>
+<g class="booth-cell" id="shape_a51_H02A" data-code="H02A">
+<rect class="booth" x="168" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="484" font-size="12" text-anchor="middle">H02A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H02J" data-code="H02J">
+<rect class="booth" x="238" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="270" y="484" font-size="12" text-anchor="middle">H02J</text>
+</g>
+<g class="booth-cell" id="shape_a51_H03A" data-code="H03A">
+<rect class="booth" x="308" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="340" y="484" font-size="12" text-anchor="middle">H03A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H03I" data-code="H03I">
+<rect class="booth" x="378" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="410" y="484" font-size="12" text-anchor="middle">H03I</text>
+</g>
+<g class="booth-cell" id="shape_a51_H03J" data-code="H03J">
+<rect class="booth" x="448" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="480" y="484" font-size="12" text-anchor="middle">H03J</text>
+</g>
+<g class="booth-cell" id="shape_a51_H04A" data-code="H04A">
+<rect class="booth" x="518" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="550" y="484" font-size="12" text-anchor="middle">H04A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H04D" data-code="H04D">
+<rect class="booth" x="588" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="620" y="484" font-size="12" text-anchor="middle">H04D</text>
+</g>
+<g class="booth-cell" id="shape_a51_H09A" data-code="H09A">
+<rect class="booth" x="658" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="690" y="484" font-size="12" text-anchor="middle">H09A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H09B" data-code="H09B">
+<rect class="booth" x="728" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="760" y="484" font-size="12" text-anchor="middle">H09B</text>
+</g>
+<g class="booth-cell" id="shape_a51_H09E" data-code="H09E">
+<rect class="booth" x="798" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="830" y="484" font-size="12" text-anchor="middle">H09E</text>
+</g>
+<g class="booth-cell" id="shape_a51_H09F" data-code="H09F">
+<rect class="booth" x="868" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="900" y="484" font-size="12" text-anchor="middle">H09F</text>
+</g>
+<g class="booth-cell" id="shape_a51_H09G" data-code="H09G">
+<rect class="booth" x="938" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="970" y="484" font-size="12" text-anchor="middle">H09G</text>
+</g>
+<g class="booth-cell" id="shape_a51_H10A" data-code="H10A">
+<rect class="booth" x="1008" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1040" y="484" font-size="12" text-anchor="middle">H10A</text>
+</g>
+<g class="booth-cell" id="shape_a51_H10C" data-code="H10C">
+<rect class="booth" x="1078" y="460" width="64" height="40" rx="3"/>
+<text class="booth-code" x="1110" y="484" font-size="12" text-anchor="middle">H10C</text>
+</g>
+<g class="booth-cell" id="shape_a51_H10J" data-code="H10J">
+<rect class="booth" x="28" y="516" width="64" height="40" rx="3"/>
+<text class="booth-code" x="60" y="540" font-size="12" text-anchor="middle">H10J</text>
+</g>
+<g class="booth-cell" id="shape_a51_H10L" data-code="H10L">
+<rect class="booth" x="98" y="516" width="64" height="40" rx="3"/>
+<text class="booth-code" x="130" y="540" font-size="12" text-anchor="middle">H10L</text>
+</g>
+<g class="booth-cell" id="shape_a51_H021" data-code="H021">
+<rect class="booth" x="168" y="516" width="64" height="40" rx="3"/>
+<text class="booth-code" x="200" y="540" font-size="12" text-anchor="middle">H021</text>
+</g>
+</svg>

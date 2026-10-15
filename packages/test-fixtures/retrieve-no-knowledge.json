@@ -1,0 +1,10 @@
+{
+  "request_id": "req_retrieve_none",
+  "chunks": [],
+  "versions": {
+    "kb": "kb_2026_spring_1",
+    "search": "search_1.4.0",
+    "index": "documents_2026_spring_1"
+  },
+  "trace": { "route": "hybrid", "elapsed_ms": 37 }
+}

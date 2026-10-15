@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_booth","conversation_id":"conv_demo","message_id":"msg_booth","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_booth","message_id":"msg_booth","delta":"C18在5.2馆中区，可在地图中高亮。"}
+
+event: entity.card
+data: {"request_id":"req_booth","message_id":"msg_booth","card":{"card_id":"card_booth_demo_C18","type":"booth","entity_id":"booth_demo_C18","title":"5.2馆 C18","actions":[{"type":"highlight_booth","label":"高亮展位","booth_id":"booth_demo_C18","map_shape_id":"shape_demo_C18"}],"payload":{"booth_id":"booth_demo_C18","display_code":"C18","map_shape_id":"shape_demo_C18"}}}
+
+event: message.done
+data: {"request_id":"req_booth","conversation_id":"conv_demo","message_id":"msg_booth","answer_status":"answered","intent":"booth_lookup","search_route":"exact","confidence":"high","latency_ms":62,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

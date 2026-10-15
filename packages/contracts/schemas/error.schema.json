@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/error.schema.json",
+  "title": "ErrorContract",
+  "oneOf": [
+    { "$ref": "#/$defs/PublicError" },
+    { "$ref": "#/$defs/InternalError" },
+    { "$ref": "#/$defs/PublicErrorEnvelope" },
+    { "$ref": "#/$defs/InternalErrorEnvelope" }
+  ],
+  "$defs": {
+    "ErrorCode": {
+      "type": "string",
+      "enum": [
+        "INVALID_ARGUMENT",
+        "SESSION_EXPIRED",
+        "EXPO_NOT_FOUND",
+        "ENTITY_NOT_FOUND",
+        "RATE_LIMITED",
+        "SEARCH_TIMEOUT",
+        "RETRIEVE_TIMEOUT",
+        "AI_UPSTREAM_TIMEOUT",
+        "KNOWLEDGE_UNAVAILABLE",
+        "UPSTREAM_UNAVAILABLE",
+        "STREAM_INTERRUPTED",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "PublicError": {
+      "type": "object",
+      "required": ["code", "message", "user_message", "retryable"],
+      "properties": {
+        "code": { "$ref": "#/$defs/ErrorCode" },
+        "message": { "type": "string" },
+        "user_message": { "type": "string" },
+        "retryable": { "type": "boolean" },
+        "details": { "type": "null" }
+      },
+      "additionalProperties": false
+    },
+    "InternalError": {
+      "type": "object",
+      "required": ["code", "message", "user_message", "retryable", "trace_id"],
+      "properties": {
+        "code": { "$ref": "#/$defs/ErrorCode" },
+        "message": { "type": "string" },
+        "user_message": { "type": "string" },
+        "retryable": { "type": "boolean" },
+        "details": { "type": "null" },
+        "trace_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "PublicErrorEnvelope": {
+      "type": "object",
+      "required": ["request_id", "success", "data", "error"],
+      "properties": {
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "success": { "const": false },
+        "data": { "type": "null" },
+        "error": { "$ref": "#/$defs/PublicError" },
+        "meta": { "$ref": "common.schema.json#/$defs/ApiMeta" }
+      },
+      "additionalProperties": false
+    },
+    "InternalErrorEnvelope": {
+      "type": "object",
+      "required": ["request_id", "success", "data", "error"],
+      "properties": {
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "success": { "const": false },
+        "data": { "type": "null" },
+        "error": { "$ref": "#/$defs/InternalError" },
+        "meta": { "$ref": "common.schema.json#/$defs/ApiMeta" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

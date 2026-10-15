@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: AI 问答助手 Public API
+  version: 1.0.0
+  description: H5 仅访问本 BFF 接口；未知 SSE event 由客户端安全忽略。
+servers:
+  - url: https://ai.example.com
+security:
+  - sessionBearer: []
+paths:
+  /api/v1/session:
+    post:
+      summary: 创建匿名会话
+      operationId: E01CreateSession
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/SessionRequest'
+      responses:
+        '201':
+          description: 匿名会话已创建
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/SessionResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /api/v1/config:
+    get:
+      summary: 获取 H5 展示配置
+      operationId: E02GetConfig
+      security: []
+      parameters:
+        - name: expo_id
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: H5 展示配置
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/ConfigResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /api/v1/chat/stream:
+    post:
+      summary: 发起流式 AI 对话
+      operationId: E03StreamChat
+      description: H5 使用 fetch + ReadableStream 发起 POST，并按 UTF-8 SSE 帧解析。message.error 是终止事件。
+      parameters:
+        - $ref: '#/components/parameters/ProtocolVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/PublicChatRequest'
+      responses:
+        '200':
+          description: message.start 后以 message.done 或 message.error 终止；客户端主动取消除外
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+            X-Accel-Buffering:
+              schema:
+                type: string
+          content:
+            text/event-stream:
+              schema:
+                type: string
+              examples:
+                delta:
+                  value: |-
+                    event: message.delta
+                    data: {"request_id":"r_1","message_id":"m_1","delta":"你好"}
+
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGateway' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /api/v1/chat:
+    post:
+      summary: 发起非流式 AI 对话
+      operationId: E04Chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/PublicChatRequest'
+      responses:
+        '200':
+          description: 非流式降级响应
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/PublicChatResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGateway' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /api/v1/feedback:
+    post:
+      summary: 提交用户反馈
+      operationId: E05SubmitFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/feedback.schema.json#/$defs/FeedbackRequest'
+      responses:
+        '200':
+          description: 反馈已由 A 方持久化；下游质量信号异步发送
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/feedback.schema.json#/$defs/FeedbackResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /api/v1/events/batch:
+    post:
+      summary: 批量提交行为事件
+      operationId: E06SubmitEventBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/events.schema.json#/$defs/EventsBatchRequest'
+      responses:
+        '200':
+          description: 最多 50 条行为事件已接收
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/events.schema.json#/$defs/EventsBatchResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /api/v1/entities/{entity_type}/{entity_id}:
+    get:
+      summary: 获取结构化实体详情
+      operationId: E07GetEntity
+      parameters:
+        - name: entity_type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [exhibitor, product, event]
+        - name: entity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: expo_id
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: 权威结构化实体详情
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/EntityDetailsResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGateway' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+components:
+  securitySchemes:
+    sessionBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: session_token
+  parameters:
+    ProtocolVersion:
+      name: X-Protocol-Version
+      in: header
+      required: false
+      schema:
+        type: string
+        const: 1.0.0
+  responses:
+    BadRequest: { $ref: '#/components/responses/PublicError' }
+    Unauthorized: { $ref: '#/components/responses/PublicError' }
+    Forbidden: { $ref: '#/components/responses/PublicError' }
+    NotFound: { $ref: '#/components/responses/PublicError' }
+    Conflict: { $ref: '#/components/responses/PublicError' }
+    UnprocessableEntity: { $ref: '#/components/responses/PublicError' }
+    TooManyRequests: { $ref: '#/components/responses/PublicError' }
+    InternalServerError: { $ref: '#/components/responses/PublicError' }
+    BadGateway: { $ref: '#/components/responses/PublicError' }
+    ServiceUnavailable: { $ref: '#/components/responses/PublicError' }
+    GatewayTimeout: { $ref: '#/components/responses/PublicError' }
+    PublicError:
+      description: 统一公开错误；HTTP 状态码仍表达错误类别
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/error.schema.json#/$defs/PublicErrorEnvelope'

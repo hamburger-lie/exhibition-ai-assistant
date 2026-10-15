@@ -1,0 +1,26 @@
+{
+  "request_id": "req_entity_huayan",
+  "success": true,
+  "data": {
+    "entity_type": "exhibitor",
+    "entity": {
+      "id": "exhibitor_huayan",
+      "name": "华研生物科技",
+      "aliases": ["华研生物"],
+      "brands": ["华研"],
+      "hall": { "id": "hall_demo", "name": "5.2馆" },
+      "booths": [
+        {
+          "booth_id": "booth_demo_C18",
+          "display_code": "C18",
+          "map_shape_id": "shape_demo_C18"
+        }
+      ],
+      "categories": ["胶原蛋白原料"],
+      "tags": ["OEM"],
+      "description": "胶原蛋白原料与护肤产品展商。",
+      "status": "published"
+    }
+  },
+  "error": null
+}

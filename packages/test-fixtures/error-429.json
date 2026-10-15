@@ -1,0 +1,12 @@
+{
+  "request_id": "req_rate_limited",
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "request rate exceeded",
+    "user_message": "请求较多，请稍后重试。",
+    "retryable": true,
+    "details": null
+  }
+}

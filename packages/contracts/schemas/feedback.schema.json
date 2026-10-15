@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/feedback.schema.json",
+  "title": "FeedbackContract",
+  "oneOf": [
+    { "$ref": "#/$defs/FeedbackRequest" },
+    { "$ref": "#/$defs/FeedbackResponse" },
+    { "$ref": "#/$defs/QualitySignalsRequest" },
+    { "$ref": "#/$defs/QualitySignalsResponse" }
+  ],
+  "$defs": {
+    "FeedbackReason": {
+      "type": "string",
+      "enum": [
+        "irrelevant",
+        "wrong_information",
+        "outdated_information",
+        "not_found",
+        "not_resolved",
+        "bad_recommendation",
+        "other"
+      ]
+    },
+    "FeedbackTarget": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["entity_type", "entity_id"],
+          "properties": {
+            "entity_type": {
+              "$ref": "common.schema.json#/$defs/EntityType"
+            },
+            "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" }
+          },
+          "additionalProperties": false
+        },
+        { "type": "null" }
+      ]
+    },
+    "PositiveFeedbackRequest": {
+      "type": "object",
+      "required": [
+        "feedback_id",
+        "request_id",
+        "conversation_id",
+        "message_id",
+        "rating"
+      ],
+      "properties": {
+        "feedback_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "conversation_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "rating": { "const": "positive" },
+        "target": { "$ref": "#/$defs/FeedbackTarget" },
+        "comment": { "type": "string", "maxLength": 500 }
+      },
+      "additionalProperties": false
+    },
+    "NegativeFeedbackRequest": {
+      "type": "object",
+      "required": [
+        "feedback_id",
+        "request_id",
+        "conversation_id",
+        "message_id",
+        "rating",
+        "reason"
+      ],
+      "properties": {
+        "feedback_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "conversation_id": {
+          "$ref": "common.schema.json#/$defs/OpaqueId"
+        },
+        "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "rating": { "const": "negative" },
+        "reason": { "$ref": "#/$defs/FeedbackReason" },
+        "target": { "$ref": "#/$defs/FeedbackTarget" },
+        "comment": { "type": "string", "maxLength": 500 }
+      },
+      "additionalProperties": false
+    },
+    "FeedbackRequest": {
+      "oneOf": [
+        { "$ref": "#/$defs/PositiveFeedbackRequest" },
+        { "$ref": "#/$defs/NegativeFeedbackRequest" }
+      ]
+    },
+    "FeedbackResponse": {
+      "type": "object",
+      "required": ["request_id", "success", "data", "error"],
+      "properties": {
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "success": { "const": true },
+        "data": {
+          "type": "object",
+          "required": ["feedback_id", "accepted"],
+          "properties": {
+            "feedback_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "accepted": { "const": true }
+          },
+          "additionalProperties": false
+        },
+        "error": { "type": "null" }
+      },
+      "additionalProperties": false
+    },
+    "QualitySignalType": {
+      "type": "string",
+      "enum": [
+        "negative_feedback",
+        "zero_result",
+        "low_confidence",
+        "user_rephrase",
+        "entity_no_click",
+        "conflict_detected",
+        "outdated_detected"
+      ]
+    },
+    "QualitySignalPayload": {
+      "type": "object",
+      "properties": {
+        "reason": { "$ref": "#/$defs/FeedbackReason" },
+        "target": { "$ref": "#/$defs/FeedbackTarget" },
+        "raw_query": { "type": "string" },
+        "normalized_query": { "type": "string" },
+        "result_count": { "type": "integer", "minimum": 0 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "issue_class": {
+          "type": "string",
+          "enum": [
+            "NO_KNOWLEDGE",
+            "LOW_RETRIEVAL",
+            "AMBIGUOUS_ENTITY",
+            "CONFLICT",
+            "OUTDATED",
+            "BAD_ANSWER",
+            "USER_UNRESOLVED"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "QualitySignal": {
+      "type": "object",
+      "required": [
+        "signal_id",
+        "signal_type",
+        "occurred_at",
+        "request_id",
+        "expo_id",
+        "payload"
+      ],
+      "properties": {
+        "signal_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "signal_type": { "$ref": "#/$defs/QualitySignalType" },
+        "occurred_at": { "$ref": "common.schema.json#/$defs/DateTime" },
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "expo_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "payload": { "$ref": "#/$defs/QualitySignalPayload" }
+      },
+      "additionalProperties": false
+    },
+    "QualitySignalsRequest": {
+      "type": "object",
+      "required": ["signals"],
+      "properties": {
+        "signals": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/QualitySignal" },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "additionalProperties": false
+    },
+    "QualitySignalsResponse": {
+      "type": "object",
+      "required": ["accepted"],
+      "properties": { "accepted": { "type": "integer", "minimum": 0 } },
+      "additionalProperties": false
+    }
+  }
+}

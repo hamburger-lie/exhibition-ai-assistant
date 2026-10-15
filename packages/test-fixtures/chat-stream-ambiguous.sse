@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_ambiguous","conversation_id":"conv_demo","message_id":"msg_ambiguous","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_ambiguous","message_id":"msg_ambiguous","delta":"你说的“华研”可能指展商或品牌，请确认。"}
+
+event: suggestion.list
+data: {"request_id":"req_ambiguous","message_id":"msg_ambiguous","items":[{"id":"suggest_exhibitor","text":"华研生物科技展商"},{"id":"suggest_brand","text":"华研品牌产品"}]}
+
+event: message.done
+data: {"request_id":"req_ambiguous","conversation_id":"conv_demo","message_id":"msg_ambiguous","answer_status":"clarify","intent":"multi_intent","search_route":"fuzzy","confidence":"low","latency_ms":73,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

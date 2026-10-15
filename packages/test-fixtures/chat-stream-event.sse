@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_event","conversation_id":"conv_demo","message_id":"msg_event","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_event","message_id":"msg_event","delta":"AI赋能美业论坛将于8月25日举行。"}
+
+event: entity.card
+data: {"request_id":"req_event","message_id":"msg_event","card":{"card_id":"card_event_ai_forum","type":"event","entity_id":"event_ai_forum","title":"AI赋能美业论坛","actions":[{"type":"open_entity","label":"查看活动","entity_id":"event_ai_forum"}],"payload":{"event_id":"event_ai_forum","title":"AI赋能美业论坛","start_at":"2026-08-25T10:00:00+08:00","end_at":"2026-08-25T11:30:00+08:00","venue":"5.2馆论坛区","hall_id":"hall_demo","status":"scheduled","speakers":["林老师"],"tags":["AI"]}}}
+
+event: message.done
+data: {"request_id":"req_event","conversation_id":"conv_demo","message_id":"msg_event","answer_status":"answered","intent":"event_search","search_route":"exact","confidence":"high","latency_ms":91,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

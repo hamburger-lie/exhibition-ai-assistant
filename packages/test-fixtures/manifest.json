@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "scenarios": [
+    {
+      "id": "chat-exhibitor",
+      "file": "chat-stream-exhibitor.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": {
+          "card_type": "exhibitor",
+          "required_events": ["entity.card", "citation", "suggestion.list"],
+          "source_ids": ["source_exhibitors_2026"]
+        }
+      }
+    },
+    {
+      "id": "chat-booth",
+      "file": "chat-stream-booth.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": { "card_type": "booth", "required_events": ["entity.card"] }
+      }
+    },
+    {
+      "id": "chat-abstain",
+      "file": "chat-stream-abstain.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": { "answer_status": "abstain" }
+      }
+    },
+    {
+      "id": "chat-error",
+      "file": "chat-stream-error.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "error",
+        "semantic": { "error_code": "UPSTREAM_UNAVAILABLE" }
+      }
+    },
+    {
+      "id": "chat-product",
+      "file": "chat-stream-product.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": {
+          "card_type": "product",
+          "required_events": ["entity.card"]
+        }
+      }
+    },
+    {
+      "id": "chat-event",
+      "file": "chat-stream-event.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": { "card_type": "event", "required_events": ["entity.card"] }
+      }
+    },
+    {
+      "id": "chat-ambiguous",
+      "file": "chat-stream-ambiguous.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": { "answer_status": "clarify" }
+      }
+    },
+    {
+      "id": "chat-conflict",
+      "file": "chat-stream-conflict.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "semantic": {
+          "answer_status": "conflict",
+          "source_ids": ["source_events_2026", "source_notice_2026"]
+        }
+      }
+    },
+    {
+      "id": "chat-interrupted",
+      "file": "chat-stream-interrupted.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": {
+        "http_status": 200,
+        "initial_delay_ms": 0,
+        "interrupt_after_events": 2
+      },
+      "expect": { "terminal": "interrupted", "semantic": { "event_count": 2 } }
+    },
+    {
+      "id": "chat-unknown-event",
+      "file": "chat-stream-unknown-event.sse",
+      "format": "sse",
+      "contract": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "done",
+        "unknown_events": ["debug.trace"],
+        "semantic": {
+          "required_events": ["message.start", "message.delta", "message.done"]
+        }
+      }
+    },
+    {
+      "id": "search-exact",
+      "file": "search-exact.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/SearchResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "semantic": { "route": "exact", "trace_branches": ["exact"] }
+      }
+    },
+    {
+      "id": "search-fuzzy",
+      "file": "search-fuzzy.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/SearchResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "semantic": { "route": "fuzzy", "trace_branches": ["lexical"] }
+      }
+    },
+    {
+      "id": "search-hybrid",
+      "file": "search-hybrid.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/SearchResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "semantic": {
+          "route": "hybrid",
+          "trace_branches": ["lexical", "semantic", "fusion", "rerank"]
+        }
+      }
+    },
+    {
+      "id": "retrieve-no-knowledge",
+      "file": "retrieve-no-knowledge.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/RetrieveResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": { "terminal": "none", "semantic": { "chunks_count": 0 } }
+    },
+    {
+      "id": "entity-exhibitor",
+      "file": "entity-exhibitor.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/EntityDetailsResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "semantic": { "entity_type": "exhibitor" }
+      }
+    },
+    {
+      "id": "config-default",
+      "file": "config-default.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/chat.schema.json#/$defs/ConfigResponse",
+      "transport": { "http_status": 200, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "semantic": { "config_version": "config_2026_spring_1" }
+      }
+    },
+    {
+      "id": "old-expo",
+      "file": "error-old-expo.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope",
+      "transport": { "http_status": 404, "initial_delay_ms": 0 },
+      "expect": {
+        "terminal": "none",
+        "expo_id": "expo_demo_2025_spring",
+        "expo_policy": "hard_filter_no_fallback",
+        "semantic": {
+          "error_code": "EXPO_NOT_FOUND",
+          "first_event": false,
+          "http_status": 404
+        }
+      }
+    },
+    {
+      "id": "http-429",
+      "file": "error-429.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope",
+      "transport": {
+        "http_status": 429,
+        "initial_delay_ms": 0,
+        "response_headers": { "Retry-After": "2" }
+      },
+      "expect": {
+        "terminal": "none",
+        "semantic": {
+          "error_code": "RATE_LIMITED",
+          "first_event": false,
+          "http_status": 429,
+          "retry_after_seconds": 2
+        }
+      }
+    },
+    {
+      "id": "http-503",
+      "file": "error-503.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope",
+      "transport": {
+        "http_status": 503,
+        "initial_delay_ms": 0,
+        "response_headers": { "Retry-After": "5" }
+      },
+      "expect": {
+        "terminal": "none",
+        "semantic": {
+          "error_code": "UPSTREAM_UNAVAILABLE",
+          "first_event": false,
+          "http_status": 503,
+          "retry_after_seconds": 5
+        }
+      }
+    },
+    {
+      "id": "initial-timeout",
+      "file": "error-timeout.json",
+      "format": "json",
+      "contract": "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope",
+      "transport": { "http_status": 504, "initial_delay_ms": 30001 },
+      "expect": {
+        "terminal": "none",
+        "semantic": {
+          "error_code": "AI_UPSTREAM_TIMEOUT",
+          "first_event": false,
+          "http_status": 504,
+          "min_initial_delay_ms": 30001
+        }
+      }
+    }
+  ]
+}

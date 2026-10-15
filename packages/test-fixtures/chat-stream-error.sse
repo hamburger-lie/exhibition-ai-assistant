@@ -1,0 +1,8 @@
+event: message.start
+data: {"request_id":"req_stream_error","conversation_id":"conv_demo","message_id":"msg_stream_error","protocol_version":"1.0.0"}
+
+event: status.update
+data: {"request_id":"req_stream_error","stage":"searching","display_text":"正在检索"}
+
+event: message.error
+data: {"request_id":"req_stream_error","message_id":"msg_stream_error","error":{"code":"UPSTREAM_UNAVAILABLE","message":"knowledge service unavailable","user_message":"知识服务暂时不可用，请稍后重试。","retryable":true,"details":null}}

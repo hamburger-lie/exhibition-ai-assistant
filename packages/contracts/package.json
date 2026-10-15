@@ -1,0 +1,12 @@
+{
+  "name": "@ai-assistant/contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "tsx scripts/generate-types.ts",
+    "generate:check": "tsx scripts/generate-types.ts --check",
+    "build": "pnpm generate",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  }
+}

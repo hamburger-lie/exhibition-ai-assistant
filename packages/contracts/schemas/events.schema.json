@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/events.schema.json",
+  "title": "EventsContract",
+  "oneOf": [
+    { "$ref": "#/$defs/EventsBatchRequest" },
+    { "$ref": "#/$defs/EventsBatchResponse" },
+    { "$ref": "#/$defs/SseEvent" }
+  ],
+  "$defs": {
+    "BehaviorEventType": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "message_send",
+        "suggestion_click",
+        "entity_impression",
+        "entity_click",
+        "citation_open",
+        "map_open",
+        "booth_highlight",
+        "stream_cancel",
+        "error_view",
+        "feedback_submit"
+      ]
+    },
+    "BehaviorEventProps": {
+      "type": "object",
+      "properties": {
+        "position": { "type": "integer", "minimum": 0 },
+        "surface": { "type": "string", "minLength": 1 },
+        "booth_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "map_shape_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "citation_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "error_code": { "$ref": "error.schema.json#/$defs/ErrorCode" },
+        "cancel_reason": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "BehaviorEvent": {
+      "type": "object",
+      "required": ["event_id", "event_type", "occurred_at", "request_id"],
+      "properties": {
+        "event_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "event_type": { "$ref": "#/$defs/BehaviorEventType" },
+        "occurred_at": { "$ref": "common.schema.json#/$defs/DateTime" },
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "entity": {
+          "type": "object",
+          "required": ["type", "id"],
+          "properties": {
+            "type": { "$ref": "common.schema.json#/$defs/EntityType" },
+            "id": { "$ref": "common.schema.json#/$defs/OpaqueId" }
+          },
+          "additionalProperties": false
+        },
+        "props": { "$ref": "#/$defs/BehaviorEventProps" }
+      },
+      "additionalProperties": false
+    },
+    "EventsBatchRequest": {
+      "type": "object",
+      "required": ["events"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/BehaviorEvent" },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "additionalProperties": false
+    },
+    "EventsBatchResponse": {
+      "type": "object",
+      "required": ["request_id", "success", "data", "error"],
+      "properties": {
+        "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "success": { "const": true },
+        "data": {
+          "type": "object",
+          "required": ["accepted"],
+          "properties": {
+            "accepted": { "type": "integer", "minimum": 0, "maximum": 50 }
+          },
+          "additionalProperties": false
+        },
+        "error": { "type": "null" }
+      },
+      "additionalProperties": false
+    },
+    "MessageStartEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "message.start" },
+        "data": {
+          "type": "object",
+          "required": [
+            "request_id",
+            "conversation_id",
+            "message_id",
+            "protocol_version"
+          ],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "conversation_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "protocol_version": { "const": "1.0.0" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "StatusUpdateEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "status.update" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "stage", "display_text"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "stage": {
+              "type": "string",
+              "enum": ["understanding", "searching", "reranking", "answering"]
+            },
+            "display_text": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessageDeltaEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "message.delta" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "message_id", "delta"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "delta": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "EntityCardEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "entity.card" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "message_id", "card"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "card": { "$ref": "card.schema.json#/$defs/EntityCard" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "CitationEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "citation" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "message_id", "citation"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "citation": { "$ref": "citation.schema.json#/$defs/Citation" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "SuggestionListEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "suggestion.list" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "message_id", "items"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "items": {
+              "type": "array",
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "required": ["id", "text"],
+                "properties": {
+                  "id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+                  "text": { "type": "string", "minLength": 1 }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessageDoneEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "message.done" },
+        "data": {
+          "type": "object",
+          "required": [
+            "request_id",
+            "conversation_id",
+            "message_id",
+            "answer_status",
+            "intent",
+            "search_route",
+            "confidence",
+            "latency_ms",
+            "versions"
+          ],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "conversation_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "answer_status": { "$ref": "chat.schema.json#/$defs/AnswerStatus" },
+            "intent": { "$ref": "chat.schema.json#/$defs/Intent" },
+            "search_route": {
+              "type": "string",
+              "enum": [
+                "exact",
+                "lexical",
+                "fuzzy",
+                "semantic",
+                "hybrid",
+                "retrieve",
+                "none"
+              ]
+            },
+            "confidence": {
+              "type": "string",
+              "enum": ["high", "medium", "low"]
+            },
+            "latency_ms": { "type": "integer", "minimum": 0 },
+            "versions": { "$ref": "common.schema.json#/$defs/PublicVersions" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "MessageErrorEvent": {
+      "type": "object",
+      "required": ["event", "data"],
+      "properties": {
+        "event": { "const": "message.error" },
+        "data": {
+          "type": "object",
+          "required": ["request_id", "message_id", "error"],
+          "properties": {
+            "request_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "message_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+            "error": { "$ref": "error.schema.json#/$defs/PublicError" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "SseEvent": {
+      "oneOf": [
+        { "$ref": "#/$defs/MessageStartEvent" },
+        { "$ref": "#/$defs/StatusUpdateEvent" },
+        { "$ref": "#/$defs/MessageDeltaEvent" },
+        { "$ref": "#/$defs/EntityCardEvent" },
+        { "$ref": "#/$defs/CitationEvent" },
+        { "$ref": "#/$defs/SuggestionListEvent" },
+        { "$ref": "#/$defs/MessageDoneEvent" },
+        { "$ref": "#/$defs/MessageErrorEvent" }
+      ]
+    }
+  }
+}

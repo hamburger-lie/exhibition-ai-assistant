@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/common.schema.json",
+  "title": "CommonContract",
+  "oneOf": [
+    { "$ref": "#/$defs/ApiMeta" },
+    { "$ref": "#/$defs/Booth" },
+    { "$ref": "#/$defs/PublicVersions" },
+    { "$ref": "#/$defs/InternalVersions" }
+  ],
+  "$defs": {
+    "OpaqueId": { "type": "string", "minLength": 1 },
+    "DateTime": { "type": "string", "format": "date-time" },
+    "EntityType": {
+      "type": "string",
+      "enum": ["exhibitor", "product", "event", "booth"]
+    },
+    "ApiMeta": {
+      "type": "object",
+      "required": ["api_version", "server_time"],
+      "properties": {
+        "api_version": { "const": "v1" },
+        "server_time": { "$ref": "#/$defs/DateTime" }
+      },
+      "additionalProperties": false
+    },
+    "Booth": {
+      "type": "object",
+      "required": ["booth_id", "display_code"],
+      "properties": {
+        "booth_id": { "$ref": "#/$defs/OpaqueId" },
+        "display_code": { "type": "string", "minLength": 1 },
+        "map_shape_id": { "$ref": "#/$defs/OpaqueId" }
+      },
+      "additionalProperties": false
+    },
+    "PublicVersions": {
+      "type": "object",
+      "required": ["kb", "search"],
+      "properties": {
+        "kb": { "type": "string" },
+        "search": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "PromptVersions": {
+      "type": "object",
+      "required": ["prompt"],
+      "properties": {
+        "kb": { "type": "string" },
+        "search": { "type": "string" },
+        "prompt": { "type": "string" },
+        "model": { "type": "string" },
+        "index": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "IndexedVersions": {
+      "type": "object",
+      "required": ["index"],
+      "properties": {
+        "kb": { "type": "string" },
+        "search": { "type": "string" },
+        "prompt": { "type": "string" },
+        "model": { "type": "string" },
+        "index": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "InternalVersions": {
+      "anyOf": [
+        { "$ref": "#/$defs/PromptVersions" },
+        { "$ref": "#/$defs/IndexedVersions" }
+      ]
+    }
+  }
+}

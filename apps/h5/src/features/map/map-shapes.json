@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "shapes": [
+    {
+      "map_shape_id": "shape_demo_C18",
+      "hall_id": "hall_demo",
+      "booth_id": "booth_demo_C18",
+      "display_code": "C18"
+    },
+    {
+      "map_shape_id": "shape_demo_C20",
+      "hall_id": "hall_demo",
+      "booth_id": "booth_demo_C20",
+      "display_code": "C20"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "single-booth",
+      "entity_id": "exhibitor_huayan",
+      "booths": [
+        { "booth_id": "booth_demo_C18", "display_code": "C18", "map_shape_id": "shape_demo_C18" }
+      ]
+    },
+    {
+      "id": "multi-booth",
+      "entity_id": "exhibitor_multi",
+      "booths": [
+        { "booth_id": "booth_demo_C18", "display_code": "C18", "map_shape_id": "shape_demo_C18" },
+        { "booth_id": "booth_demo_C20", "display_code": "C20", "map_shape_id": "shape_demo_C20" }
+      ]
+    },
+    {
+      "id": "missing-shape",
+      "entity_id": "exhibitor_noshape",
+      "booths": [{ "booth_id": "booth_demo_D01", "display_code": "D01" }]
+    }
+  ]
+}

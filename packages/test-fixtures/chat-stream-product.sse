@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_product","conversation_id":"conv_demo","message_id":"msg_product","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_product","message_id":"msg_product","delta":"为你找到华研胶原焕颜精华。"}
+
+event: entity.card
+data: {"request_id":"req_product","message_id":"msg_product","card":{"card_id":"card_product_collagen","type":"product","entity_id":"product_collagen_serum","title":"胶原焕颜精华","actions":[{"type":"open_entity","label":"查看产品","entity_id":"product_collagen_serum"},{"type":"highlight_booth","label":"前往展位","booth_id":"booth_demo_C18","map_shape_id":"shape_demo_C18"}],"payload":{"product_id":"product_collagen_serum","name":"胶原焕颜精华","category":"护肤精华","functions":["保湿"],"brand":"华研","exhibitor_id":"exhibitor_huayan","hall_id":"hall_demo","booth_ids":["booth_demo_C18"],"tags":["胶原蛋白"]}}}
+
+event: message.done
+data: {"request_id":"req_product","conversation_id":"conv_demo","message_id":"msg_product","answer_status":"answered","intent":"product_search","search_route":"hybrid","confidence":"high","latency_ms":148,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

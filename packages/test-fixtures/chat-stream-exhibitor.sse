@@ -1,0 +1,20 @@
+event: message.start
+data: {"request_id":"req_exhibitor","conversation_id":"conv_demo","message_id":"msg_exhibitor","protocol_version":"1.0.0"}
+
+event: status.update
+data: {"request_id":"req_exhibitor","stage":"searching","display_text":"正在查找展商"}
+
+event: message.delta
+data: {"request_id":"req_exhibitor","message_id":"msg_exhibitor","delta":"华研生物位于5.2馆C18展位。"}
+
+event: entity.card
+data: {"request_id":"req_exhibitor","message_id":"msg_exhibitor","card":{"card_id":"card_exhibitor_huayan","type":"exhibitor","entity_id":"exhibitor_huayan","title":"华研生物科技","actions":[{"type":"open_entity","label":"查看展商","entity_id":"exhibitor_huayan"},{"type":"highlight_booth","label":"展位定位","booth_id":"booth_demo_C18","map_shape_id":"shape_demo_C18"}],"payload":{"name":"华研生物科技","brands":["华研"],"hall_id":"hall_demo","hall_name":"5.2馆","booths":[{"booth_id":"booth_demo_C18","display_code":"C18","map_shape_id":"shape_demo_C18"}],"categories":["胶原蛋白原料"],"tags":["OEM"],"logo_url":null,"recommendation_reason":"与胶原蛋白 OEM 需求匹配"}}}
+
+event: citation
+data: {"request_id":"req_exhibitor","message_id":"msg_exhibitor","citation":{"citation_id":"citation_huayan","source_id":"source_exhibitors_2026","title":"2026春季展商名录","page_or_row":"row 118","snippet":"华研生物科技，5.2馆C18","source_type":"structured_data"}}
+
+event: suggestion.list
+data: {"request_id":"req_exhibitor","message_id":"msg_exhibitor","items":[{"id":"suggest_huayan_products","text":"看看该展商的产品"},{"id":"suggest_nearby","text":"推荐附近展商"}]}
+
+event: message.done
+data: {"request_id":"req_exhibitor","conversation_id":"conv_demo","message_id":"msg_exhibitor","answer_status":"answered","intent":"exhibitor_search","search_route":"exact","confidence":"high","latency_ms":126,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

@@ -1,0 +1,376 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/test-fixtures/scenario.schema.json",
+  "type": "object",
+  "required": ["version", "scenarios"],
+  "properties": {
+    "version": { "const": 1 },
+    "scenarios": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["id", "file", "format", "contract", "transport", "expect"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "file": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+(?:\\.[a-z0-9-]+)*\\.(sse|json)$"
+          },
+          "format": { "enum": ["sse", "json"] },
+          "contract": {
+            "enum": [
+              "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent",
+              "https://assistant.example/schemas/chat.schema.json#/$defs/SearchResponse",
+              "https://assistant.example/schemas/chat.schema.json#/$defs/RetrieveResponse",
+              "https://assistant.example/schemas/chat.schema.json#/$defs/EntityDetailsResponse",
+              "https://assistant.example/schemas/chat.schema.json#/$defs/ConfigResponse",
+              "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope"
+            ]
+          },
+          "transport": {
+            "type": "object",
+            "required": ["http_status", "initial_delay_ms"],
+            "properties": {
+              "http_status": {
+                "type": "integer",
+                "minimum": 100,
+                "maximum": 599
+              },
+              "initial_delay_ms": { "type": "integer", "minimum": 0 },
+              "interrupt_after_events": { "type": "integer", "minimum": 1 },
+              "response_headers": {
+                "type": "object",
+                "properties": {
+                  "Retry-After": { "type": "string", "pattern": "^[0-9]+$" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "expect": {
+            "type": "object",
+            "required": ["terminal", "semantic"],
+            "properties": {
+              "terminal": { "enum": ["done", "error", "interrupted", "none"] },
+              "unknown_events": {
+                "type": "array",
+                "items": { "type": "string" },
+                "uniqueItems": true
+              },
+              "expo_id": { "type": "string", "minLength": 1 },
+              "expo_policy": { "const": "hard_filter_no_fallback" },
+              "semantic": {
+                "type": "object",
+                "minProperties": 1,
+                "properties": {
+                  "route": { "enum": ["exact", "fuzzy", "hybrid"] },
+                  "trace_branches": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "exact",
+                        "lexical",
+                        "semantic",
+                        "fusion",
+                        "rerank"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "chunks_count": { "type": "integer", "minimum": 0 },
+                  "card_type": {
+                    "enum": ["exhibitor", "product", "event", "booth"]
+                  },
+                  "required_events": {
+                    "type": "array",
+                    "items": { "type": "string", "minLength": 1 },
+                    "uniqueItems": true
+                  },
+                  "answer_status": {
+                    "enum": [
+                      "answered",
+                      "clarify",
+                      "abstain",
+                      "conflict",
+                      "partial"
+                    ]
+                  },
+                  "error_code": { "type": "string", "minLength": 1 },
+                  "event_count": { "type": "integer", "minimum": 1 },
+                  "first_event": { "type": "boolean" },
+                  "http_status": {
+                    "type": "integer",
+                    "minimum": 100,
+                    "maximum": 599
+                  },
+                  "min_initial_delay_ms": { "type": "integer", "minimum": 0 },
+                  "retry_after_seconds": { "type": "integer", "minimum": 0 },
+                  "entity_type": { "enum": ["exhibitor", "product", "event"] },
+                  "config_version": { "type": "string", "minLength": 1 },
+                  "source_ids": {
+                    "type": "array",
+                    "items": { "type": "string", "minLength": 1 },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "format": { "const": "sse" } } },
+            "then": {
+              "properties": {
+                "file": { "type": "string", "pattern": "\\.sse$" },
+                "contract": {
+                  "const": "https://assistant.example/schemas/events.schema.json#/$defs/SseEvent"
+                },
+                "transport": {
+                  "type": "object",
+                  "properties": {
+                    "http_status": { "const": 200 },
+                    "initial_delay_ms": { "const": 0 }
+                  }
+                },
+                "expect": {
+                  "type": "object",
+                  "properties": {
+                    "terminal": { "enum": ["done", "error", "interrupted"] }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "format": { "const": "json" } } },
+            "then": {
+              "properties": {
+                "file": { "type": "string", "pattern": "\\.json$" },
+                "contract": {
+                  "enum": [
+                    "https://assistant.example/schemas/chat.schema.json#/$defs/SearchResponse",
+                    "https://assistant.example/schemas/chat.schema.json#/$defs/RetrieveResponse",
+                    "https://assistant.example/schemas/chat.schema.json#/$defs/EntityDetailsResponse",
+                    "https://assistant.example/schemas/chat.schema.json#/$defs/ConfigResponse",
+                    "https://assistant.example/schemas/error.schema.json#/$defs/PublicErrorEnvelope"
+                  ]
+                },
+                "transport": {
+                  "type": "object",
+                  "not": {
+                    "properties": { "interrupt_after_events": {} },
+                    "required": ["interrupt_after_events"]
+                  }
+                },
+                "expect": {
+                  "type": "object",
+                  "properties": { "terminal": { "const": "none" } }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "expect": {
+                  "type": "object",
+                  "properties": { "terminal": { "const": "interrupted" } }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "interrupt_after_events": {} },
+                  "required": ["interrupt_after_events"]
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "not": {
+                    "properties": { "interrupt_after_events": {} },
+                    "required": ["interrupt_after_events"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "id": { "const": "chat-error" } } },
+            "then": {
+              "properties": {
+                "expect": {
+                  "type": "object",
+                  "properties": { "terminal": { "const": "error" } }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "id": { "const": "chat-interrupted" } }
+            },
+            "then": {
+              "properties": {
+                "expect": {
+                  "type": "object",
+                  "properties": { "terminal": { "const": "interrupted" } }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": { "const": "sse" },
+                "id": { "not": { "enum": ["chat-error", "chat-interrupted"] } }
+              },
+              "required": ["format", "id"]
+            },
+            "then": {
+              "properties": {
+                "expect": {
+                  "type": "object",
+                  "properties": { "terminal": { "const": "done" } }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "id": { "const": "old-expo" } } },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "const": 404 } }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "id": { "const": "http-429" } } },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "const": 429 } }
+                }
+              }
+            }
+          },
+          {
+            "if": { "properties": { "id": { "const": "http-503" } } },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "const": 503 } }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "id": { "const": "initial-timeout" } }
+            },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "const": 504 } }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": {
+                    "http_status": { "enum": [404, 429, 503, 504] }
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "format": { "const": "json" },
+                "expect": {
+                  "type": "object",
+                  "properties": {
+                    "semantic": {
+                      "type": "object",
+                      "required": ["first_event"],
+                      "properties": { "first_event": { "const": false } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "const": 504 } }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": {
+                    "initial_delay_ms": {
+                      "type": "integer",
+                      "minimum": 30001
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "properties": { "http_status": { "enum": [429, 503] } }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "transport": {
+                  "type": "object",
+                  "required": ["response_headers"],
+                  "properties": {
+                    "response_headers": {
+                      "type": "object",
+                      "properties": { "Retry-After": {} },
+                      "required": ["Retry-After"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

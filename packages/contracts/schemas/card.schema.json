@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/card.schema.json",
+  "title": "CardContract",
+  "$ref": "#/$defs/EntityCard",
+  "$defs": {
+    "OpenEntityAction": {
+      "type": "object",
+      "required": ["type", "label", "entity_id"],
+      "properties": {
+        "type": { "const": "open_entity" },
+        "label": { "type": "string", "minLength": 1 },
+        "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" }
+      },
+      "additionalProperties": false
+    },
+    "HighlightBoothAction": {
+      "type": "object",
+      "required": ["type", "label", "booth_id", "map_shape_id"],
+      "properties": {
+        "type": { "const": "highlight_booth" },
+        "label": { "type": "string", "minLength": 1 },
+        "booth_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "map_shape_id": { "$ref": "common.schema.json#/$defs/OpaqueId" }
+      },
+      "additionalProperties": false
+    },
+    "CardAction": {
+      "oneOf": [
+        { "$ref": "#/$defs/OpenEntityAction" },
+        { "$ref": "#/$defs/HighlightBoothAction" }
+      ]
+    },
+    "ExhibitorPayload": {
+      "type": "object",
+      "required": ["name", "hall_id", "hall_name", "booths"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "brands": { "type": "array", "items": { "type": "string" } },
+        "hall_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "hall_name": { "type": "string", "minLength": 1 },
+        "booths": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/Booth" },
+          "minItems": 1
+        },
+        "categories": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "logo_url": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "recommendation_reason": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "ProductPayload": {
+      "type": "object",
+      "required": [
+        "product_id",
+        "name",
+        "category",
+        "exhibitor_id",
+        "hall_id",
+        "booth_ids"
+      ],
+      "properties": {
+        "product_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "name": { "type": "string", "minLength": 1 },
+        "category": { "type": "string", "minLength": 1 },
+        "functions": { "type": "array", "items": { "type": "string" } },
+        "brand": { "type": "string" },
+        "exhibitor_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "hall_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "booth_ids": {
+          "type": "array",
+          "items": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+          "minItems": 1
+        },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "EventPayload": {
+      "type": "object",
+      "required": [
+        "event_id",
+        "title",
+        "start_at",
+        "end_at",
+        "venue",
+        "status"
+      ],
+      "properties": {
+        "event_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "start_at": { "$ref": "common.schema.json#/$defs/DateTime" },
+        "end_at": { "$ref": "common.schema.json#/$defs/DateTime" },
+        "venue": { "type": "string", "minLength": 1 },
+        "hall_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "status": {
+          "type": "string",
+          "enum": ["scheduled", "ongoing", "ended", "cancelled"]
+        },
+        "speakers": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "BoothPayload": {
+      "allOf": [{ "$ref": "common.schema.json#/$defs/Booth" }]
+    },
+    "ExhibitorCard": {
+      "type": "object",
+      "required": [
+        "card_id",
+        "type",
+        "entity_id",
+        "title",
+        "actions",
+        "payload"
+      ],
+      "properties": {
+        "card_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "type": { "const": "exhibitor" },
+        "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CardAction" }
+        },
+        "payload": { "$ref": "#/$defs/ExhibitorPayload" }
+      },
+      "additionalProperties": false
+    },
+    "ProductCard": {
+      "type": "object",
+      "required": [
+        "card_id",
+        "type",
+        "entity_id",
+        "title",
+        "actions",
+        "payload"
+      ],
+      "properties": {
+        "card_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "type": { "const": "product" },
+        "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CardAction" }
+        },
+        "payload": { "$ref": "#/$defs/ProductPayload" }
+      },
+      "additionalProperties": false
+    },
+    "EventCard": {
+      "type": "object",
+      "required": [
+        "card_id",
+        "type",
+        "entity_id",
+        "title",
+        "actions",
+        "payload"
+      ],
+      "properties": {
+        "card_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "type": { "const": "event" },
+        "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CardAction" }
+        },
+        "payload": { "$ref": "#/$defs/EventPayload" }
+      },
+      "additionalProperties": false
+    },
+    "BoothCard": {
+      "type": "object",
+      "required": [
+        "card_id",
+        "type",
+        "entity_id",
+        "title",
+        "actions",
+        "payload"
+      ],
+      "properties": {
+        "card_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "type": { "const": "booth" },
+        "entity_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/CardAction" }
+        },
+        "payload": { "$ref": "#/$defs/BoothPayload" }
+      },
+      "additionalProperties": false
+    },
+    "EntityCard": {
+      "oneOf": [
+        { "$ref": "#/$defs/ExhibitorCard" },
+        { "$ref": "#/$defs/ProductCard" },
+        { "$ref": "#/$defs/EventCard" },
+        { "$ref": "#/$defs/BoothCard" }
+      ]
+    }
+  }
+}

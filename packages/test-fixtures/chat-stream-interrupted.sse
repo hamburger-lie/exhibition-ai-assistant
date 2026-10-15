@@ -1,0 +1,5 @@
+event: message.start
+data: {"request_id":"req_interrupted","conversation_id":"conv_demo","message_id":"msg_interrupted","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_interrupted","message_id":"msg_interrupted","delta":"正在生成答案，但连接在这里中断"}

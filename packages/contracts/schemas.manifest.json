@@ -1,0 +1,11 @@
+{
+  "schemas": [
+    "common.schema.json",
+    "chat.schema.json",
+    "card.schema.json",
+    "citation.schema.json",
+    "feedback.schema.json",
+    "events.schema.json",
+    "error.schema.json"
+  ]
+}

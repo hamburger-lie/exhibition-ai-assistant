@@ -1,0 +1,11 @@
+event: message.start
+data: {"request_id":"req_abstain","conversation_id":"conv_demo","message_id":"msg_abstain","protocol_version":"1.0.0"}
+
+event: message.delta
+data: {"request_id":"req_abstain","message_id":"msg_abstain","delta":"现有知识中没有可靠信息，我暂时无法确认。"}
+
+event: suggestion.list
+data: {"request_id":"req_abstain","message_id":"msg_abstain","items":[{"id":"suggest_rephrase","text":"换一种问法"}]}
+
+event: message.done
+data: {"request_id":"req_abstain","conversation_id":"conv_demo","message_id":"msg_abstain","answer_status":"abstain","intent":"unknown","search_route":"none","confidence":"low","latency_ms":84,"versions":{"kb":"kb_2026_spring_1","search":"search_1.4.0"}}

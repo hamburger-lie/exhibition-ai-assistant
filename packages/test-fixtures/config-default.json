@@ -1,0 +1,24 @@
+{
+  "request_id": "req_config_default",
+  "success": true,
+  "data": {
+    "assistant_name": "AI 问答助手",
+    "welcome_text": "你好，我可以帮你查展商、产品、展位和活动。",
+    "quick_actions": [
+      {
+        "id": "quick_exhibitor",
+        "label": "找展商",
+        "prompt": "帮我找胶原蛋白展商"
+      },
+      { "id": "quick_event", "label": "查活动", "prompt": "今天有哪些活动" }
+    ],
+    "features": {
+      "streaming": true,
+      "feedback": true,
+      "citations": true,
+      "map_highlight": true
+    },
+    "config_version": "config_2026_spring_1"
+  },
+  "error": null
+}

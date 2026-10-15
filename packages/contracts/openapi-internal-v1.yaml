@@ -1,0 +1,216 @@
+openapi: 3.1.0
+info:
+  title: AI 问答助手 Internal API
+  version: 1.0.0
+  description: A 方 BFF 到 B 方知识库、检索与 Agent 服务的内部接口。生产通信必须使用 TLS 或 mTLS；Bearer token 禁止通过明文 HTTP 传输。
+servers:
+  - url: https://ai-service.prod.internal
+    description: 生产内网 HTTPS 服务
+  - url: http://localhost:8000
+    description: 仅限本机开发 Mock，不得用于生产或携带生产凭据
+security:
+  - serviceBearer: []
+paths:
+  /internal/v1/agent/stream:
+    post:
+      summary: 发起内部流式 Agent
+      operationId: I01StreamAgent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/AgentRequest'
+      responses:
+        '200':
+          description: UTF-8 SSE；A 方仅向公网透传白名单事件并裁剪内部字段
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGateway' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /internal/v1/agent:
+    post:
+      summary: 发起内部非流式 Agent
+      operationId: I02Agent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/AgentRequest'
+      responses:
+        '200':
+          description: 内部非流式 Agent 响应
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/InternalAgentResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '502': { $ref: '#/components/responses/BadGateway' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /internal/v1/search:
+    post:
+      summary: 搜索结构化实体
+      operationId: I03Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/SearchRequest'
+      responses:
+        '200':
+          description: 精确、词法、模糊、语义或混合检索结果
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/SearchResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /internal/v1/retrieve:
+    post:
+      summary: 召回文档与 FAQ
+      operationId: I04Retrieve
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/RetrieveRequest'
+      responses:
+        '200':
+          description: 带真实来源定位的文档或 FAQ chunks
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/RetrieveResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /internal/v1/entities/resolve:
+    post:
+      summary: 解析唯一实体或候选
+      operationId: I05ResolveEntity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/chat.schema.json#/$defs/ResolveRequest'
+      responses:
+        '200':
+          description: 唯一、歧义或未找到的实体解析结果
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/ResolveResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '504': { $ref: '#/components/responses/GatewayTimeout' }
+  /internal/v1/quality/signals:
+    post:
+      summary: 提交异步质量信号
+      operationId: I06SubmitQualitySignals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/feedback.schema.json#/$defs/QualitySignalsRequest'
+      responses:
+        '202':
+          description: 质量信号已异步接收
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/feedback.schema.json#/$defs/QualitySignalsResponse'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '422': { $ref: '#/components/responses/UnprocessableEntity' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /internal/v1/health:
+    get:
+      summary: 获取知识服务健康状态
+      operationId: I07Health
+      responses:
+        '200':
+          description: 服务和依赖健康状态
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/HealthResponse'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+  /internal/v1/version:
+    get:
+      summary: 获取知识与检索版本
+      operationId: I08Version
+      responses:
+        '200':
+          description: 服务、知识库、检索、Prompt 和索引版本
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/chat.schema.json#/$defs/VersionResponse'
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+components:
+  securitySchemes:
+    serviceBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: service_token
+      description: 仅允许在生产 TLS/mTLS 通道内传输；禁止通过明文 HTTP 发送。
+  responses:
+    BadRequest: { $ref: '#/components/responses/InternalError' }
+    Unauthorized: { $ref: '#/components/responses/InternalError' }
+    Forbidden: { $ref: '#/components/responses/InternalError' }
+    NotFound: { $ref: '#/components/responses/InternalError' }
+    UnprocessableEntity: { $ref: '#/components/responses/InternalError' }
+    InternalServerError: { $ref: '#/components/responses/InternalError' }
+    BadGateway: { $ref: '#/components/responses/InternalError' }
+    ServiceUnavailable: { $ref: '#/components/responses/InternalError' }
+    GatewayTimeout: { $ref: '#/components/responses/InternalError' }
+    InternalError:
+      description: 内部统一错误
+      content:
+        application/json:
+          schema:
+            $ref: './schemas/error.schema.json#/$defs/InternalErrorEnvelope'

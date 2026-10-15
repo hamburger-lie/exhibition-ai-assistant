@@ -1,0 +1,43 @@
+{
+  "request_id": "req_search_hybrid",
+  "route": "hybrid",
+  "normalized_query": "胶原蛋白精华",
+  "detected_entities": [
+    { "type": "category", "value": "胶原蛋白", "confidence": 0.97 }
+  ],
+  "results": [
+    {
+      "rank": 1,
+      "entity_type": "product",
+      "entity_id": "product_collagen_serum",
+      "final_score": 0.94,
+      "relevance_grade": "high",
+      "matched_fields": ["name", "category"],
+      "highlights": ["胶原", "精华"],
+      "entity": {
+        "name": "胶原焕颜精华",
+        "category": "护肤精华",
+        "exhibitor_id": "exhibitor_huayan",
+        "hall_id": "hall_demo",
+        "booth_ids": ["booth_demo_C18"]
+      }
+    }
+  ],
+  "trace": {
+    "normalization": {
+      "raw": "胶原蛋白精华",
+      "normalized": "胶原蛋白精华",
+      "corrections": []
+    },
+    "lexical": { "count": 4, "top_ids": ["product_collagen_serum"] },
+    "semantic": { "count": 6, "top_ids": ["product_collagen_serum"] },
+    "fusion": { "method": "rrf", "candidate_count": 8 },
+    "rerank": {
+      "input_count": 8,
+      "output_count": 1,
+      "model": "reranker_internal"
+    },
+    "elapsed_ms": { "total": 83, "lexical": 16, "semantic": 24, "rerank": 31 }
+  },
+  "versions": { "search": "search_1.4.0", "index": "entities_2026_spring_1" }
+}

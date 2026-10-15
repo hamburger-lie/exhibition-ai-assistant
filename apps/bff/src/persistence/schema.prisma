@@ -1,0 +1,116 @@
+// A 方持久化层。P0 阶段只有 Feedback、AnalyticsEvent、QualitySignalOutbox
+// 被路由实际写入；AnonymousSession/Conversation/Message 表已建立供后续任务
+// （完整服务端会话历史，决策 #9 中的 P1）使用，暂无外键约束，避免在这些表
+// 尚未被写入时因关联缺失而报错。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AnonymousSession {
+  id                    String   @id @default(uuid())
+  sessionToken          String   @unique @map("session_token")
+  anonymousUserId       String   @map("anonymous_user_id")
+  expoId                String   @map("expo_id")
+  defaultConversationId String   @map("default_conversation_id")
+  expiresAt             DateTime @map("expires_at")
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  @@map("anonymous_session")
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  sessionId String   @map("session_id")
+  expoId    String   @map("expo_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([sessionId])
+  @@map("conversation")
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String   @map("conversation_id")
+  role           String
+  requestId      String?  @map("request_id")
+  answerStatus   String?  @map("answer_status")
+  text           String
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@index([conversationId])
+  @@map("message")
+}
+
+model Feedback {
+  id             String   @id @default(uuid())
+  feedbackId     String   @unique @map("feedback_id")
+  requestId      String   @map("request_id")
+  conversationId String   @map("conversation_id")
+  messageId      String   @map("message_id")
+  rating         String
+  reason         String?
+  comment        String?
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("feedback")
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid())
+  eventId    String   @unique @map("event_id")
+  eventType  String   @map("event_type")
+  occurredAt DateTime @map("occurred_at")
+  requestId  String   @map("request_id")
+  messageId  String?  @map("message_id")
+  entityType String?  @map("entity_type")
+  entityId   String?  @map("entity_id")
+  props      Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("analytics_event")
+}
+
+/// API-01：client.message_id 幂等。用唯一约束保证「同一 client_message_id
+/// 只生成一次回答」，并用租约（lease）处理进程崩溃后的接管，使语义在多实例
+/// 部署下依然成立——所有协调都在数据库里，不依赖任何进程内状态。
+///
+/// status: in_progress = 有实例正在生成；completed = 结果已可回放。
+model ChatIdempotency {
+  id              String   @id @default(uuid())
+  clientMessageId String   @unique @map("client_message_id")
+  status          String
+  /// 当前持有者的 request_id，仅用于排障。
+  requestId       String   @map("request_id")
+  /// 租约到期后其他实例可接管，避免持有者崩溃导致永久卡死。
+  leaseExpiresAt  DateTime @map("lease_expires_at")
+  /// 完成后的可回放结果（PublicChatData 形状）。
+  result          Json?
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@index([status, leaseExpiresAt])
+  @@map("chat_idempotency")
+}
+
+/// Feedback -> I06 (quality/signals) 的异步重试队列。I06 不可用时 E05 仍
+/// 立即返回成功；本表保留最后一次失败原因，绝不记录 Authorization/token。
+model QualitySignalOutbox {
+  id            String    @id @default(uuid())
+  feedbackId    String    @map("feedback_id")
+  signalType    String    @map("signal_type")
+  payload       Json
+  attempts      Int       @default(0)
+  lastError     String?   @map("last_error")
+  nextAttemptAt DateTime  @default(now()) @map("next_attempt_at")
+  resolvedAt    DateTime? @map("resolved_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@index([resolvedAt, nextAttemptAt])
+  @@map("quality_signal_outbox")
+}

@@ -1,0 +1,92 @@
+# A 方部署编排。真实 B 服务不在本文件范围内：把 B_SERVICE_BASE_URL 指向已
+# 部署好的 B 方服务即可；`mock-b` 只在联调/验收 profile 下启用。
+#
+# 本地/联调用法（本地是一次性环境，随便重建）：
+#   docker compose -p assistant-acceptance --profile mock up -d --build   # 带 Mock B
+#   docker compose -p assistant up -d --build                             # 接真实 B
+#
+# 生产服务器（project 名另定）不适用上面的写法：
+# 那边禁止重建容器，改动走热更新 + docker commit 固化（生产运维手册不在公开版里）。
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-assistant}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-postgres}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 会话与限流的共享存储。多实例部署时所有 BFF 实例连同一个 Redis，
+  # 令牌与限流配额才会跨实例共享。
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  mock-b:
+    build:
+      context: ..
+      dockerfile: deploy/mock-b.Dockerfile
+    restart: unless-stopped
+    profiles: ['mock']
+    environment:
+      MOCK_B_HOST: 0.0.0.0
+      MOCK_B_PORT: '3001'
+    expose:
+      - '3001'
+
+  bff:
+    build:
+      context: ..
+      dockerfile: deploy/bff.Dockerfile
+    restart: unless-stopped
+    environment:
+      BFF_HOST: 0.0.0.0
+      BFF_PORT: '3000'
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-assistant}?schema=public
+      B_SERVICE_BASE_URL: ${B_SERVICE_BASE_URL:-http://mock-b:3001}
+      B_SERVICE_TOKEN: ${B_SERVICE_TOKEN:-}
+      B_SERVICE_TIMEOUT_MS: ${B_SERVICE_TIMEOUT_MS:-30000}
+      BFF_CORS_ALLOWED_ORIGINS: ${BFF_CORS_ALLOWED_ORIGINS:-http://localhost:8081}
+      BFF_RATE_LIMIT_WINDOW_MS: ${BFF_RATE_LIMIT_WINDOW_MS:-60000}
+      BFF_RATE_LIMIT_MAX: ${BFF_RATE_LIMIT_MAX:-120}
+      BFF_SERVICE_VERSION: ${BFF_SERVICE_VERSION:-0.0.0}
+      BFF_LOG_LEVEL: ${BFF_LOG_LEVEL:-info}
+      BFF_STORE_BACKEND: redis
+      REDIS_URL: redis://redis:6379
+      BFF_ENTITY_DETAIL_PROVIDER: ${BFF_ENTITY_DETAIL_PROVIDER:-none}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    expose:
+      - '3000'
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: deploy/h5.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - bff
+    ports:
+      - '${HTTP_PORT:-8081}:80'
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://assistant.example/schemas/citation.schema.json",
+  "title": "CitationContract",
+  "$ref": "#/$defs/Citation",
+  "$defs": {
+    "Citation": {
+      "type": "object",
+      "required": ["citation_id", "source_id", "title", "source_type"],
+      "properties": {
+        "citation_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "source_id": { "$ref": "common.schema.json#/$defs/OpaqueId" },
+        "title": { "type": "string", "minLength": 1 },
+        "page_or_row": { "type": ["string", "null"] },
+        "snippet": { "type": "string" },
+        "source_type": {
+          "type": "string",
+          "enum": ["structured_data", "faq", "document", "webpage_internal"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

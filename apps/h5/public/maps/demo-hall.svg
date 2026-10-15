@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="presentation">
+<!-- 占位展馆平面图：展位的 id 必须等于接口返回的 map_shape_id，MapCanvas 依据它定位高亮。 -->
+<style>.booth{fill:#ffffff;stroke:#b9bec4;stroke-width:1.5}.booth-code{fill:#1a1a1f;font-family:sans-serif}</style>
+<rect x="0" y="0" width="400" height="300" fill="#eef0f2"/>
+<rect x="24" y="40" width="352" height="220" fill="#ffffff" stroke="#d8dbde" stroke-width="2"/>
+<text x="24" y="28" font-size="13" fill="#5a5a66">示例展馆平面图（占位素材）</text>
+<g class="booth-cell" id="shape_demo_C18" data-code="C18">
+<rect class="booth" x="48" y="72" width="72" height="52" rx="3"/>
+<text class="booth-code" x="84" y="102" font-size="13" text-anchor="middle">C18</text>
+</g>
+<g class="booth-cell" id="shape_demo_C20" data-code="C20">
+<rect class="booth" x="140" y="72" width="72" height="52" rx="3"/>
+<text class="booth-code" x="176" y="102" font-size="13" text-anchor="middle">C20</text>
+</g>
+<g class="booth-cell" id="shape_demo_C22" data-code="C22">
+<rect class="booth" x="232" y="72" width="72" height="52" rx="3"/>
+<text class="booth-code" x="268" y="102" font-size="13" text-anchor="middle">C22</text>
+</g>
+<g class="booth-cell" id="shape_demo_D01" data-code="D01">
+<rect class="booth" x="48" y="176" width="72" height="52" rx="3"/>
+<text class="booth-code" x="84" y="206" font-size="13" text-anchor="middle">D01</text>
+</g>
+<g class="booth-cell" id="shape_demo_D03" data-code="D03">
+<rect class="booth" x="140" y="176" width="72" height="52" rx="3"/>
+<text class="booth-code" x="176" y="206" font-size="13" text-anchor="middle">D03</text>
+</g>
+<g class="booth-cell" id="shape_demo_D05" data-code="D05">
+<rect class="booth" x="232" y="176" width="72" height="52" rx="3"/>
+<text class="booth-code" x="268" y="206" font-size="13" text-anchor="middle">D05</text>
+</g>
+<text x="200" y="156" font-size="12" fill="#5a5a66" text-anchor="middle">主通道</text>
+</svg>
